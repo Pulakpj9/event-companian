@@ -1,0 +1,41 @@
+name: Backend CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: companion_test
+          POSTGRES_PASSWORD: isolated_ci_only
+          POSTGRES_DB: companion_test
+        ports:
+          - 5432/tcp
+        options: >-
+          --health-cmd "pg_isready -U companion_test -d companion_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+      - run: npm run test:contract
+      - run: npm run test:integration
+        env:
+          TEST_DATABASE_URL: postgresql://companion_test:isolated_ci_only@127.0.0.1:${{ job.services.postgres.ports[5432] }}/companion_test
+      - run: npm audit --audit-level=high

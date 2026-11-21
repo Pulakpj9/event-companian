@@ -1,0 +1,9 @@
+﻿# Attendee and business clients
+
+Companion will provide separate attendee (B2C) and business (B2B) Android apps and web interfaces. Confirm iOS app packaging and feature coverage with the pilot release scope. Use the same identity provider and backend, with distinct client registrations and sessions. Use Authorization Code with PKCE on native and public web clients. Native clients use the system browser and platform-secured token storage. Each client signs out its own session. Account-wide session revocation belongs to the identity provider.
+
+B2C opens in personal context with tickets and bookings. B2B first lists available organisations and permits creating a workspace or accepting an invitation. B2B shows the selected organisation near the page title. Product and exhibition functions can both appear under one workspace. The backend verifies membership and action permissions even if a stale UI still shows controls. Display the acting organisation before consequential actions.
+
+Team Management shows member status, roles and the effective permission summary. Use named presets first and a checklist of supported actions for custom access. Keep refunds and sensitive exports as separate permissions. Owners can assign Admin. Admins can manage ordinary members. Ownership transfer is a dedicated future operation. On desktop, show a member list and details. On mobile, use a stacked list and focused edit screen. Show loading, empty, invitation created, expired invitation, denied access and save error states. Use labelled controls, visible focus, keyboard operation and status text. Treat complex floor-plan editing and detailed reporting as B2B web-first pilot candidates.
+
+Measure successful invitations, time to grant correct access and B2B mobile task demand. Verify a person can move across both channels and two organisations, and that revocation rejects the next protected request.
